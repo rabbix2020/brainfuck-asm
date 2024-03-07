@@ -3,7 +3,7 @@ code resb 30000
 array resb 30000
 
 section .data
-prompt db ">>> "
+prompt db 10,">>> "
 
 section .text
 
@@ -16,7 +16,7 @@ _start:
 mov rax, 1
 mov rdi, 1
 mov rsi, prompt
-mov rdx, 4
+mov rdx, 5
 syscall
 
 mov rax, 0
@@ -103,8 +103,36 @@ pop rax
 jmp _loop
 
 _while:
+mov r9, 0
+cmp byte [array+r8], 0
+je _skip_while
 push rax
 jmp _loop
+
+_skip_while:
+
+dec rax
+
+_skip_while_loop:
+inc rax
+
+cmp byte [code+rax], '['
+je _r9_add
+
+cmp byte [code+rax], ']'
+je _r9_sub
+
+cmp r9, 0
+jne _skip_while_loop
+jmp _loop
+
+_r9_sub:
+dec r9
+jmp _skip_while_loop
+
+_r9_add:
+inc r9
+jmp _skip_while_loop
 
 _endwhile:
 cmp byte [array+r8], 0
