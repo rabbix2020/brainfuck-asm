@@ -103,17 +103,13 @@ pop rax
 jmp _loop
 
 _while:
-mov r9, 0
+inc r9
 cmp byte [array+r8], 0
 je _skip_while
 push rax
 jmp _loop
 
 _skip_while:
-
-dec rax
-
-_skip_while_loop:
 inc rax
 
 cmp byte [code+rax], '['
@@ -123,16 +119,16 @@ cmp byte [code+rax], ']'
 je _r9_sub
 
 cmp r9, 0
-jne _skip_while_loop
+jne _skip_while
 jmp _loop
 
 _r9_sub:
 dec r9
-jmp _skip_while_loop
+jmp _skip_while
 
 _r9_add:
 inc r9
-jmp _skip_while_loop
+jmp _skip_while
 
 _endwhile:
 cmp byte [array+r8], 0
