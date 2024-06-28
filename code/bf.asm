@@ -1,5 +1,6 @@
 section .bss
 code resb 30000
+deadend resb 1
 array resb 30000
 
 section .data
