@@ -13,6 +13,11 @@ section .text
 global _start
 
 _start:
+
+pop rax
+cmp rax, 2
+je _fileread
+
 mov rax, 1
 mov rdi, 1
 mov rsi, prompt
@@ -24,6 +29,29 @@ mov rdi, 0
 mov rsi, code
 mov rdx, 30000
 syscall
+
+jne _skip_fileread
+
+_fileread:
+mov rax, 2
+pop rdi
+pop rdi
+mov rsi, 0
+mov rdx, 0
+syscall
+
+push rax
+mov rdi, rax
+mov rax, 0
+mov rsi, code
+mov rdx, 30000
+syscall
+
+mov rax, 3
+pop rdi
+syscall
+
+_skip_fileread:
 
 mov rax, -1
 _loop:
