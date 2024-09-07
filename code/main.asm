@@ -23,8 +23,6 @@ cmp rax, 2
 je _fileread
 
 push rax
-
-push rax
 mov rax, prompt
 call _print_text
 pop rax
