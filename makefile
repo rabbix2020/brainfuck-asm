@@ -1,4 +1,5 @@
 bf: bf.o
 	ld bf.o -o bf
-bf.o: code/bf.asm
-	nasm -felf64 code/bf.asm -O0 -o bf.o
+	rm bf.o
+bf.o: code/main.asm
+	nasm -felf64 code/main.asm -O0 -o bf.o
