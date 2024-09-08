@@ -1,5 +1,5 @@
 section .bss
-file_stat resb 88
+file_stat resb 144
 code resb 30000
 deadend resb 1
 array resb 30000
@@ -116,9 +116,7 @@ je _endwhile
 cmp byte [r10+rax], 0
 jne _loop
 
-mov rax, 60
-mov rdi, 0
-syscall
+jmp _exit
 
 _left:
 inc r8
