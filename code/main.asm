@@ -1,6 +1,8 @@
 section .bss
 file_stat resb 144
 array resb 30000
+saved_termios resb 36
+termios resb 36
 
 section .rdata
 prompt db 10,">>> ", 0
@@ -15,6 +17,20 @@ section .text
 global _start
 
 _start:
+
+mov rax, 16
+mov rdi, 0
+mov rsi, 21505
+mov rdx, saved_termios
+syscall
+
+mov rax, 16
+mov rdi, 0
+mov rsi, 21505
+mov rdx, termios
+syscall
+
+and byte [termios+12], 253
 
 pop rax
 cmp rax, 2
@@ -90,6 +106,13 @@ mov rsi, r10
 mov rdx, [file_stat+48]
 syscall
 
+mov rax, 1
+mov rdi, 1
+mov rsi, r10
+mov rdx, [file_stat+48]
+inc rdx
+int3
+
 mov rax, 3
 pop rdi
 syscall
@@ -161,11 +184,23 @@ jmp _loop
 _getch:
 push rax
 
+mov  rax, 16
+mov  rdi, 0
+mov  rsi, 21506
+mov  rdx, termios
+syscall
+
 mov rax, 0
 mov rdi, 0
 mov rsi, array
 add rsi, r8
 mov rdx, 1
+syscall
+
+mov  rax, 16
+mov  rdi, 0
+mov  rsi, 21506
+mov  rdx, saved_termios
 syscall
 
 pop rax
