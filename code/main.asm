@@ -74,7 +74,7 @@ mov rax, 12
 mov rdi, 0
 syscall
 
-add rax, qword [file_stat+48]
+add rax, [file_stat+48]
 inc rax
 mov rdi, rax
 mov rax, 12
@@ -87,7 +87,7 @@ push rax
 mov rdi, rax
 mov rax, 0
 mov rsi, r10
-mov rdx, qword [file_stat+48]
+mov rdx, [file_stat+48]
 syscall
 
 mov rax, 3
