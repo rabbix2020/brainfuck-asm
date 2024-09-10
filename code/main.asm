@@ -1,7 +1,5 @@
 section .bss
 file_stat resb 144
-code resb 30000
-deadend resb 1
 array resb 30000
 
 section .rdata
@@ -27,15 +25,28 @@ mov rax, prompt
 call _print_text
 pop rax
 
+pop rax
+
+push rax
+mov rax, 12
+mov rdi, 0
+syscall
+
+add rax, 30001
+mov rdi, rax
+mov rax, 12
+syscall
+
+mov r10, rax
+pop rax
+
 push rax
 mov rax, 0
 mov rdi, 0
-mov rsi, code
+mov rsi, r10
 mov rdx, 30000
 syscall
 pop rax
-
-mov r10, code
 
 cmp rax, 2
 jne _skip_fileread
