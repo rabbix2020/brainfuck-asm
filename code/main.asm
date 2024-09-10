@@ -30,6 +30,7 @@ mov rsi, 21505
 mov rdx, termios
 syscall
 
+and dword [termios+12], 4294967031
 and byte [termios+12], 253
 
 pop rax
