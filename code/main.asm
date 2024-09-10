@@ -106,18 +106,17 @@ mov rsi, r10
 mov rdx, [file_stat+48]
 syscall
 
-mov rax, 1
-mov rdi, 1
-mov rsi, r10
-mov rdx, [file_stat+48]
-inc rdx
-int3
-
 mov rax, 3
 pop rdi
 syscall
 
 _skip_fileread:
+
+mov  rax, 16
+mov  rdi, 0
+mov  rsi, 21506
+mov  rdx, termios
+syscall
 
 mov rax, -1
 _loop:
@@ -149,6 +148,12 @@ je _endwhile
 
 cmp byte [r10+rax], 0
 jne _loop
+
+mov  rax, 16
+mov  rdi, 0
+mov  rsi, 21506
+mov  rdx, saved_termios
+syscall
 
 jmp _exit
 
@@ -184,23 +189,11 @@ jmp _loop
 _getch:
 push rax
 
-mov  rax, 16
-mov  rdi, 0
-mov  rsi, 21506
-mov  rdx, termios
-syscall
-
 mov rax, 0
 mov rdi, 0
 mov rsi, array
 add rsi, r8
 mov rdx, 1
-syscall
-
-mov  rax, 16
-mov  rdi, 0
-mov  rsi, 21506
-mov  rdx, saved_termios
 syscall
 
 pop rax
