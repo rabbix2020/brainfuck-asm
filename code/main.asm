@@ -225,6 +225,7 @@ je _r9_sub
 
 cmp r9, 0
 jne _skip_while
+dec rax
 jmp _loop
 
 _r9_sub:
