@@ -1,3 +1,5 @@
+%define code_len 30000
+
 section .bss
 file_stat resb 144
 array resb 30000
@@ -49,10 +51,12 @@ mov rax, 12
 mov rdi, 0
 syscall
 
-add rax, 30001
+add rax, code_len+1
 mov rdi, rax
 mov rax, 12
 syscall
+
+sub rax, code_len+1
 
 mov r10, rax
 pop rax
@@ -61,7 +65,7 @@ push rax
 mov rax, 0
 mov rdi, 0
 mov rsi, r10
-mov rdx, 30000
+mov rdx, code_len
 syscall
 pop rax
 
@@ -96,6 +100,9 @@ inc rax
 mov rdi, rax
 mov rax, 12
 syscall
+
+sub rax, [file_stat+48]
+dec rax
 
 mov r10, rax
 pop rax
