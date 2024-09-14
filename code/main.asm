@@ -1,3 +1,5 @@
+; my honest reaction to what i have done -> https://www.youtube.com/watch?v=wfMl0kXFmiE
+
 %define code_len 30000
 
 section .bss
@@ -208,7 +210,7 @@ pop rax
 jmp _loop
 
 _while:
-inc r9
+mov r9, 1
 cmp byte [array+r8], 0
 je _skip_while
 push rax
@@ -223,6 +225,8 @@ je _r9_add
 cmp byte [r10+rax], ']'
 je _r9_sub
 
+_skip_while_return:
+
 cmp r9, 0
 jne _skip_while
 dec rax
@@ -230,11 +234,11 @@ jmp _loop
 
 _r9_sub:
 dec r9
-jmp _skip_while
+jmp _skip_while_return
 
 _r9_add:
 inc r9
-jmp _skip_while
+jmp _skip_while_return
 
 _endwhile:
 cmp byte [array+r8], 0
